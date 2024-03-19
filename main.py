@@ -10,7 +10,6 @@ from api.covid import covid_api
 from api.joke import joke_api
 from api.user import user_api
 from api.player import player_api
-from titanic.model import predict_survival
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -56,7 +55,7 @@ def predict():
 @app.before_request
 def before_request():
     allowed_origin = request.headers.get('Origin')
-    if allowed_origin in ['http://localhost:4100', 'http://127.0.0.1:4100', 'https://nighthawkcoders.github.io']:
+    if allowed_origin in ['http://localhost:4100', 'http://0.0.0.0:4200/', 'https://nighthawkcoders.github.io']:
         cors._origins = allowed_origin
 
 # Create an AppGroup for custom commands
