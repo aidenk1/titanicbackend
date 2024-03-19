@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from titanic_model import predict_survival  # Import the function for predicting survival from the Titanic model
+from titanic.model import predict_survival  # Import the function for predicting survival from the Titanic model
 
 titanic_api = Blueprint('titanic_api', __name__, url_prefix='/api/titanic')
 

@@ -10,7 +10,7 @@ from api.covid import covid_api
 from api.joke import joke_api
 from api.user import user_api
 from api.player import player_api
-from titanic_model import predict_survival  # Import the function for predicting survival from the Titanic model
+from titanic.model import predict_survival
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
