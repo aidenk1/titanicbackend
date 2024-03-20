@@ -7,29 +7,33 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
+from flask_restful import Api, Resource
 from flask import Blueprint, jsonify, request
 from joblib import dump, load
 
 
 model = load('./api/model_save.joblib')
-passenger = pd.DataFrame({
-    'pclass': [1],
-    'sex': [0],
-    'age': [5],
-    'sibsp': [0],
-    'parch': [0],
-    'fare': [512.00],
-    'alone': [0]
-})
+# passenger = pd.DataFrame({
+#     'pclass': [1],
+#     'sex': [0],
+#     'age': [5],
+#     'sibsp': [0],
+#     'parch': [0],
+#     'fare': [512.00],
+#     'alone': [0]
+# })
 
 titanic_api = Blueprint('titanic_api', __name__, url_prefix='/api/titanic')
+api = Api(titanic_api)
 
-@titanic_api.route('/api/titanic/predict', methods=['POST'])
-def predict():
-    data = request.json
-    if data is None:
-        return jsonify({'error': 'No data provided'}), 400
+class titanicAPI:
+    class _CRUD(Resource):
+        def post(self):
+            body = request.get_json()
+            if body is not None:
+                dead_proba, alive_proba = np.squeeze(model.predict_proba(body))
+                return jsonify({'alive_chance': alive_proba, 'dead_chance': dead_proba}), 200
+            else:
+                return jsonify({'message': 'No data provided'}), 400
     
-    dead_proba, alive_proba = np.squeeze(model.predict_proba(data))
-
-    return jsonify({'alive_chance': alive_proba, 'dead_chance': dead_proba}), 200
+    api.add_resource(_CRUD, '/predict')
