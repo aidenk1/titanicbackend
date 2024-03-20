@@ -31,7 +31,8 @@ class titanicAPI:
         def post(self):
             body = request.get_json()
             if body is not None:
-                dead_proba, alive_proba = np.squeeze(model.predict_proba(body))
+                data = pd.DataFrame(body)
+                dead_proba, alive_proba = np.squeeze(model.predict_proba(data))
                 return jsonify({'alive_chance': alive_proba, 'dead_chance': dead_proba}), 200
             else:
                 return jsonify({'message': 'No data provided'}), 400
