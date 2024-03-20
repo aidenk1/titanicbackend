@@ -52,8 +52,8 @@ def table():
 @app.before_request
 def before_request():
     allowed_origin = request.headers.get('Origin')
-    if allowed_origin in ['http://localhost:4100', 'http://0.0.0.0:4200', 'https://nighthawkcoders.github.io']:
-        cors._origins = allowed_origin
+    if allowed_origin:
+        cors._origins = "*"
 
 # Create an AppGroup for custom commands
 custom_cli = AppGroup('custom', help='Custom commands')
