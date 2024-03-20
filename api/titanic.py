@@ -27,14 +27,15 @@ titanic_api = Blueprint('titanic_api', __name__, url_prefix='/api/titanic')
 api = Api(titanic_api)
 
 class titanicAPI:
-    class _CRUD(Resource):
+    class _Predict(Resource):
         def post(self):
             body = request.get_json()
             if body is not None:
-                data = pd.DataFrame(body)
+                print(body)
+                data = pd.DataFrame([body])
                 dead_proba, alive_proba = np.squeeze(model.predict_proba(data))
                 return jsonify({'alive_chance': alive_proba, 'dead_chance': dead_proba}), 200
             else:
                 return jsonify({'message': 'No data provided'}), 400
     
-    api.add_resource(_CRUD, '/predict')
+    api.add_resource(_Predict, '/predict')
