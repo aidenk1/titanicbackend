@@ -5,14 +5,14 @@ from flask_cors import CORS
 from __init__ import app, db, cors
 
 from api.titanic import titanic_api
-from flask import Flask
-from flask_cors import CORS
+from api.nba import NBA_api
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
 
 # Register URIs
 app.register_blueprint(titanic_api)
+app.register_blueprint(NBA_api)
 
 # Error handling for URL not found
 @app.errorhandler(404)
