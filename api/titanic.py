@@ -1,15 +1,9 @@
 import pandas as pd
 import numpy as np
-import sys
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import OneHotEncoder
 
 from flask_restful import Api, Resource
-from flask import Blueprint, jsonify, request
-from joblib import dump, load
+from flask import Blueprint, request
+from joblib import load
 
 
 model = load('./api/model_save.joblib')
@@ -33,7 +27,6 @@ class titanicAPI:
             if body is not None:
                 data = pd.DataFrame([body])
                 dead_proba, alive_proba = np.squeeze(model.predict_proba(data))
-                print(dead_proba)
                 return {'alive_chance': alive_proba, 'dead_chance': dead_proba}, 200
             else:
                 return {'message': 'No data provided'}, 400
