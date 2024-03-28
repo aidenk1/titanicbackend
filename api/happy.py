@@ -22,7 +22,8 @@ class happinessAPI:
             if body is not None:
                 #Convert frontend JSON output to a pandas dataframe
                 data = pd.DataFrame([body])
-                
+                data = data.rename(columns={"freedom":"Freedom to make life choices","lifespan":"Healthy life expectancy at birth","money":"Log GDP per capita","social":"Social support","location":"loc_encoded"})
+    
                 #Predict and return the happiness score (model.predict returns a 1-element array so we need to take a slice)
                 score = model.predict(data)[0]
                 return {'score': score}, 200
