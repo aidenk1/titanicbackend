@@ -22,9 +22,10 @@ class cancerAPI:
             if body is not None:
                 #Convert frontend JSON output to a pandas dataframe
                 data = pd.DataFrame([body])
-                
+                data = data.rename(columns={"bareNuclei":"Bare Nuclei","epithelialCellSize":"Single Epithelial Cell Size","mitoses":"Mitoses","normalNucleoli":"Normal Nucleoli","clumpThickness":"Clump Thickness","cellSizeUniformity":"Uniformity of Cell Size","cellShapeUniformity":"Uniformity of Cell Shape"})
+
                 #Predict and return the happiness score (model.predict returns a 1-element array so we need to take a slice)
-                score = model.predict(data)[0]
+                score = model.predict(data)[0].astype(float)
                 return {'score': score}, 200
             else:
                 return {'message': 'No data provided'}, 400
