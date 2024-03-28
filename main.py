@@ -7,6 +7,7 @@ from __init__ import app, db, cors
 from api.titanic import titanic_api
 #from api.nba import NBA_api
 from api.happy import happiness_api
+from api.cancer import cancer_api
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
@@ -15,6 +16,7 @@ CORS(app)  # This will enable CORS for all routes
 app.register_blueprint(titanic_api)
 #app.register_blueprint(NBA_api)
 app.register_blueprint(happiness_api)
+app.register_blueprint(cancer_api)
 
 # Error handling for URL not found
 @app.errorhandler(404)
